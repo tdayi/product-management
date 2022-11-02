@@ -1,5 +1,6 @@
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
+using PM.Command.Service.ActionFilter;
 using PM.Command.Service.Model.Category;
 
 namespace PM.Command.Service.Controllers;
@@ -13,6 +14,7 @@ public class CategoryController : ControllerBase
         _publishEndpoint = publishEndpoint;
     }
 
+    [RequestValidation]
     [HttpPost("/api/category/save")]
     public async Task<IActionResult> CategorySaveAsync([FromBody] CategorySaveRequest request,
         CancellationToken cancellationToken)

@@ -1,5 +1,6 @@
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
+using PM.Command.Service.ActionFilter;
 using PM.Command.Service.Model.Product;
 
 namespace PM.Command.Service.Controllers;
@@ -13,6 +14,7 @@ public class ProductController : ControllerBase
         _publishEndpoint = publishEndpoint;
     }
 
+    [RequestValidation]
     [HttpPost("/api/product/save")]
     public async Task<IActionResult> ProductSaveAsync([FromBody] ProductSaveRequest request,
         CancellationToken cancellationToken)
@@ -24,8 +26,9 @@ public class ProductController : ControllerBase
         return Accepted();
     }
 
+    [RequestValidation]
     [HttpDelete("/api/product/delete")]
-    public async Task<IActionResult> ProductDeleteAsync([FromBody] ProductSaveRequest request,
+    public async Task<IActionResult> ProductDeleteAsync([FromBody] ProductDeleteRequest request,
         CancellationToken cancellationToken)
     {
         var productDeleteCommand = request.ToCommand();
