@@ -1,24 +1,39 @@
+using PM.Core.Database.PostgreSql.DbSessionFactory;
+using PM.Core.Database.PostgreSql.UnitOfWork;
+using PM.Core.Database.UnitOfWork;
+using PM.Domain.Category.Query;
+using PM.Domain.Category.Repository;
+using PM.Domain.Product.Product;
+using PM.Domain.Product.Repository;
+using PM.Domain.Repository.Concrete;
+using PM.Domain.Repository.Context;
+using PM.Query.Service.Mapper;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IDbSessionFactory, PMDbContextFactory>();
+builder.Services.AddScoped<IUnitOfWorkFactory, UnitOfWorkFactory>();
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+builder.Services.AddScoped<CategoryReader>();
+builder.Services.AddScoped<ProductReader>();
+
+builder.Services.AddAutoMapper(typeof(CategoryMapper));
+builder.Services.AddAutoMapper(typeof(ProductMapper));
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
 
 app.MapControllers();
 
