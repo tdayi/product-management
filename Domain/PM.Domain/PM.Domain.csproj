@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Core\PM.Core\PM.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Category\Command" />
+      <Folder Include="Category\CommandHandler" />
+    </ItemGroup>
+
+</Project>
