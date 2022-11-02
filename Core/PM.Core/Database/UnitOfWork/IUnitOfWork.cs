@@ -4,7 +4,7 @@ namespace PM.Core.Database.UnitOfWork;
 
 public interface IUnitOfWork : IAsyncDisposable
 {
-    DbSession DbSession<DbSession>();
+    TSession DbSession<TSession>();
 
     Task BeginAsync(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted,
         CancellationToken cancellationToken = default);

@@ -17,9 +17,13 @@ public class UnitOfWork : IUnitOfWork
         _dbSessionModel = dbSessionModel;
     }
 
-    public DbContext DbSession<DbContext>()
+    public TSession DbSession<TSession>()
     {
-        return (DbContext) _dbSessionModel.DbSession;
+        var session = (TSession) _dbSessionModel.DbSession;
+
+        _dbContext = (DbContext) _dbSessionModel.DbSession;
+
+        return session;
     }
 
     public async Task BeginAsync(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted,
@@ -37,6 +41,10 @@ public class UnitOfWork : IUnitOfWork
     public async ValueTask DisposeAsync()
     {
         await _dbContext.DisposeAsync();
-        await _dbContextTransaction.DisposeAsync();
+
+        if (_dbContextTransaction is not null)
+        {
+            await _dbContextTransaction.DisposeAsync();
+        }
     }
 }

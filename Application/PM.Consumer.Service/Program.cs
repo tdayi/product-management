@@ -3,7 +3,14 @@ using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PM.Core.Database.PostgreSql.DbSessionFactory;
+using PM.Core.Database.PostgreSql.UnitOfWork;
+using PM.Core.Database.UnitOfWork;
+using PM.Domain.Category.Repository;
 using PM.Domain.Product.Command;
+using PM.Domain.Product.Repository;
+using PM.Domain.Repository.Concrete;
+using PM.Domain.Repository.Context;
 
 IConfigurationRoot configuration = default;
 
@@ -31,7 +38,7 @@ var builder = new HostBuilder().ConfigureAppConfiguration((hostingContext, confi
             var entryAssembly = Assembly.GetAssembly(typeof(ProductSaveCommand));
 
             busConfigurator.AddConsumers(entryAssembly);
-            
+
             busConfigurator.UsingRabbitMq((context, busFactoryConfigurator) =>
             {
                 busFactoryConfigurator.Host(rabbitMqHostName, hostConfigurator =>
@@ -42,6 +49,12 @@ var builder = new HostBuilder().ConfigureAppConfiguration((hostingContext, confi
                 busFactoryConfigurator.ConfigureEndpoints(context);
             });
         });
+
+        services.AddScoped<IDbSessionFactory, PMDbContextFactory>();
+        services.AddScoped<IUnitOfWorkFactory, UnitOfWorkFactory>();
+
+        services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
     });
 
 await builder.RunConsoleAsync();

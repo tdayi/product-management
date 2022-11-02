@@ -8,6 +8,7 @@ public class Product : IEntity<Guid>
     public string Title { get; protected set; }
     public string Description { get; protected set; }
     public int StockQuantity { get; protected set; }
+    public Guid? CategoryId { get; protected set; }
     public Category.Model.Category Category { get; protected set; }
 
     public Product()

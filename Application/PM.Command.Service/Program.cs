@@ -1,4 +1,12 @@
 using MassTransit;
+using Microsoft.EntityFrameworkCore;
+using PM.Core.Database.PostgreSql.DbSessionFactory;
+using PM.Core.Database.PostgreSql.UnitOfWork;
+using PM.Core.Database.UnitOfWork;
+using PM.Domain.Category.Repository;
+using PM.Domain.Product.Repository;
+using PM.Domain.Repository.Concrete;
+using PM.Domain.Repository.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +32,18 @@ builder.Services.AddMassTransit(busConfigurator =>
         });
     });
 });
+
+builder.Services.AddScoped<IDbSessionFactory, PMDbContextFactory>();
+builder.Services.AddScoped<IUnitOfWorkFactory, UnitOfWorkFactory>();
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+var optionsBuilder = new DbContextOptionsBuilder<PMDbContext>();
+using (var context = new PMDbContext(optionsBuilder.Options))
+{
+    context.Database.Migrate();
+}
 
 var app = builder.Build();
 

@@ -13,6 +13,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Core\PM.Core.Database.PostgreSql\PM.Core.Database.PostgreSql.csproj" />
+      <ProjectReference Include="..\..\Domain\PM.Domain.Repository\PM.Domain.Repository.csproj" />
       <ProjectReference Include="..\..\Domain\PM.Domain\PM.Domain.csproj" />
     </ItemGroup>
 
