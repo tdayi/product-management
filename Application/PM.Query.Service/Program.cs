@@ -3,7 +3,7 @@ using PM.Core.Database.PostgreSql.UnitOfWork;
 using PM.Core.Database.UnitOfWork;
 using PM.Domain.Category.Query;
 using PM.Domain.Category.Repository;
-using PM.Domain.Product.Product;
+using PM.Domain.Product.Query;
 using PM.Domain.Product.Repository;
 using PM.Domain.Repository.Concrete;
 using PM.Domain.Repository.Context;

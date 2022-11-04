@@ -1,7 +1,7 @@
 using PM.Core.Database.UnitOfWork;
 using PM.Domain.Product.Repository;
 
-namespace PM.Domain.Product.Product;
+namespace PM.Domain.Product.Query;
 
 public class ProductReader
 {

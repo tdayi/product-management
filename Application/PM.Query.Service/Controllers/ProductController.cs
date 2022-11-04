@@ -1,7 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PM.Domain.Product.Model;
-using PM.Domain.Product.Product;
+using PM.Domain.Product.Query;
 using PM.Query.Service.Model.Product;
 
 namespace PM.Query.Service.Controllers;
